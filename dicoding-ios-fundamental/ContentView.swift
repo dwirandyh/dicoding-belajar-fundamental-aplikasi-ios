@@ -9,6 +9,13 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    init() {
+        UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().showsVerticalScrollIndicator = false
+    }
+
+
     var body: some View {
         TabView {
             HomePage()
@@ -29,6 +36,7 @@ struct ContentView: View {
                     Text("About")
             }
         }
+        .accentColor(Color.red80)
     }
 }
 

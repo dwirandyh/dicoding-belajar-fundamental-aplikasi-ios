@@ -11,12 +11,7 @@ import SwiftUI
 struct HomePage: View {
 
     @ObservedObject var viewModel: HomeViewModel = HomeViewModel()
-
-    init() {
-        UITableView.appearance().separatorStyle = .none
-        UITableView.appearance().showsVerticalScrollIndicator = false
-    }
-
+    
     var body: some View {
         NavigationView {
             VStack(alignment: .center, spacing: .spacingLarge) {

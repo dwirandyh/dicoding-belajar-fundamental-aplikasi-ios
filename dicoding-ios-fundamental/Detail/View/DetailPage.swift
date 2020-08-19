@@ -46,6 +46,10 @@ struct DetailGame: View {
         }
     }
 
+    private func addToFavorite(){
+
+    }
+
     var body: some View {
         ScrollView {
             VStack {
@@ -76,13 +80,23 @@ struct DetailGame: View {
                         .font(.system(size: 12))
                         .foregroundColor(.primaryText)
 
-                    Button(action: {
-                        self.openTrailer()
-                    }){
-                        Text("Watch Trailer")
-                            .font(.system(size: 14))
-                            .fontWeight(.medium)
-                    }.modifier(ButtonModifier())
+                    HStack {
+                        Button(action: {
+                            self.openTrailer()
+                        }){
+                            Text("Watch Trailer")
+                                .font(.system(size: 14))
+                                .fontWeight(.medium)
+                        }.modifier(ButtonModifier(style: .filled))
+
+                        Button(action: {
+                            self.addToFavorite()
+                        }){
+                            Text("Add to favorite")
+                                .font(.system(size: 14))
+                                .fontWeight(.medium)
+                        }.modifier(ButtonModifier(style: .unfilled))
+                    }
                 }
                 .padding([.leading, .trailing], .spacingLarge)
                 .padding([.top, .bottom], .spacingNormal)

@@ -8,15 +8,35 @@
 
 import SwiftUI
 
-struct ButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .frame(maxWidth: .infinity)
-            .padding(10)
-            .foregroundColor(.white)
-            .background(Color.red80)
-            .cornerRadius(16)
 
+struct ButtonModifier: ViewModifier {
+
+    enum ButtonStyle {
+        case filled
+        case unfilled
+    }
+
+    var style: ButtonModifier.ButtonStyle
+    
+    func body(content: Content) -> some View {
+        switch self.style {
+        case .filled:
+            return AnyView(content
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .foregroundColor(.white)
+                .background(Color.red80)
+                .cornerRadius(16))
+        default:
+            return AnyView(content
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .foregroundColor(Color.red80)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.red80, lineWidth: 1)
+            ))
+        }
     }
 }
 
@@ -26,6 +46,6 @@ struct ButtonModifier_Previews: PreviewProvider {
 
         }){
             Text("Text")
-        }.modifier(ButtonModifier()).padding()
+        }.modifier(ButtonModifier(style: .unfilled)).padding()
     }
 }
