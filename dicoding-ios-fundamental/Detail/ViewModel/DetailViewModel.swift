@@ -21,7 +21,8 @@ class DetailViewModel: ObservableObject {
     func getDetailGame(id: Int){
         self.isLoading = true
         
-        self.service.getDetail(id: id) { (result) in
+        self.service.getDetail(id: id) { [weak self] (result) in
+            guard let self = self else { return }
             var gameResult: Game?
             switch result {
             case .success(let game):

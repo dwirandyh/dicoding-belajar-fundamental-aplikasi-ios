@@ -22,7 +22,6 @@ struct ImageView: View {
         GeometryReader{ geo in
             Image(uiImage: self.image)
                 .resizable()
-                .scaledToFill()
                 .frame(width: geo.size.width)
                 .onReceive(self.imageLoader.didChange) { (data) in
                     self.image = UIImage(data: data) ?? UIImage()

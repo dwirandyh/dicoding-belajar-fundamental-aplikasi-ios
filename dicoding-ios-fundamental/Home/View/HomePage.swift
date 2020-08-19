@@ -35,16 +35,10 @@ struct HomePage: View {
                         ActivityIndicator(isLoading: self.$viewModel.isLoading, style: .large)
                         Text("Loading, please wait")
                     }
+                    Spacer()
                 }
-
-                Spacer()
             }
             .navigationBarTitle("Home", displayMode: .inline)
-            .navigationBarItems(trailing: NavigationLink(destination: AboutPage()) {
-                Image.info
-                    .resizable()
-                    .frame(width: 20, height: 20)
-            })
                 .onAppear {
                     self.viewModel.discover()
             }
@@ -66,7 +60,6 @@ struct HomeGameList: View {
                 }.frame(width: 0, height: 0, alignment: .center)
                     .hidden()
             }
-            .padding([.bottom], .spacingLarge)
         }
     }
 }

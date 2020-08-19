@@ -10,25 +10,22 @@ import SwiftUI
 
 struct AboutPage: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
+        NavigationView {
+            VStack(alignment: .leading, spacing: 30) {
 
-            AboutProfile()
+                AboutProfile()
 
-            VStack(alignment: .leading, spacing: 24) {
-                AboutLink(name: "Github", link: "https://github.com/dwirandyh")
-                AboutLink(name: "Website", link: "https:://dwirandyh.com")
-                AboutLink(name: "Dicoding Profile", link: "https://dicoding.com")
+                VStack(alignment: .leading, spacing: 24) {
+                    AboutLink(name: "Github", link: "https://github.com/dwirandyh")
+                    AboutLink(name: "Website", link: "https:://dwirandyh.com")
+                    AboutLink(name: "Dicoding Profile", link: "https://dicoding.com")
+                }
+                .padding([.leading, .trailing], .spacingLarge)
+
+                Spacer()
             }
-            .padding([.leading, .trailing], .spacingLarge)
-
-            Spacer()
-
-//            HStack {
-//                Spacer()
-//                Spacer()
-//            }
+            .navigationBarTitle("Profile", displayMode: .inline)
         }
-        .navigationBarTitle("Profile")
     }
 }
 

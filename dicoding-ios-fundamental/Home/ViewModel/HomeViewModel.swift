@@ -24,7 +24,8 @@ class HomeViewModel: ObservableObject {
 
     func discover(){
         self.isLoading = true
-        self.service.discoverGame(query: self.query) { (result) in
+        self.service.discoverGame(query: self.query) { [weak self] (result) in
+            guard let self = self else { return }
             var gameResult: [Game] = []
             switch result {
             case .success(let games):

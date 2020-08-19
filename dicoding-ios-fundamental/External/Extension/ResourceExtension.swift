@@ -30,6 +30,9 @@ extension Image {
     static let profile: Image = Image("profile")
     static let background: Image = Image("background")
     static let info: Image = Image(systemName: "questionmark.circle.fill")
+    static let home: Image = Image(systemName: "house.fill")
+    static let about: Image = Image(systemName: "person.circle.fill")
+    static let favorit: Image = Image(systemName: "heart.fill")
 }
 
 extension String {
