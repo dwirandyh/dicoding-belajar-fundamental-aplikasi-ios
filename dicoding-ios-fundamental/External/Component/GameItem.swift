@@ -20,22 +20,41 @@ struct GameItem: View {
                     .cornerRadius(8)
             }
 
-            Text(self.game.name ?? "-")
-                .fontWeight(.medium)
-                .foregroundColor(.primaryText)
-                .font(.system(size: 18))
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(self.game.name ?? "-")
+                        .fontWeight(.medium)
+                        .foregroundColor(.primaryText)
+                        .font(.system(size: 18))
 
-            if game.genres != nil {
-                Text(self.game.getGenre())
-                    .fontWeight(.light)
-                    .foregroundColor(.primaryText)
-                    .font(.system(size: 10))
-            }
+                    if game.genres != nil {
+                        Text(self.game.getGenre())
+                            .fontWeight(.light)
+                            .foregroundColor(.primaryText)
+                            .font(.system(size: 10))
+                    }
 
-            HStack(alignment: .center, spacing: .spacingLarge) {
-                ImageLabel(image: .calendar, text: self.game.released?.convertToString(format: "dd MMMM yyyy") ?? "-")
+                    HStack(alignment: .center, spacing: .spacingLarge) {
+                        ImageLabel(image: .calendar, text: self.game.released?.convertToString(format: "dd MMMM yyyy") ?? "-")
 
-                ImageLabel(image: .timer, text: "\(self.game.playtime ?? 0) min")
+                        ImageLabel(image: .timer, text: "\(self.game.playtime ?? 0) min")
+
+                        Spacer()
+                    }
+
+                }
+                
+
+                HStack(alignment: .center, spacing: .spacingSmall) {
+                    Image.starFill
+                        .resizable()
+                        .frame(width: 14, height: 14)
+                        .foregroundColor(.gray80)
+                    Text("\(String(format: "%.1f", self.game.rating ?? 0))")
+                        .foregroundColor(.primaryText)
+                        .font(.system(size: 14))
+                }
+                .frame(maxWidth: 50)
             }
         }
     }
