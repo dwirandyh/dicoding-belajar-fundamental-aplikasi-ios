@@ -9,22 +9,28 @@
 import SwiftUI
 
 struct AboutPage: View {
+
+    @ObservedObject var viewModel: AboutViewModel = AboutViewModel()
+
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 30) {
 
-                AboutProfile()
+                AboutProfile(name: self.viewModel.name, role: self.viewModel.role)
 
                 VStack(alignment: .leading, spacing: 24) {
-                    AboutLink(name: "Github", link: "https://github.com/dwirandyh")
-                    AboutLink(name: "Website", link: "https:://dwirandyh.com")
-                    AboutLink(name: "Dicoding Profile", link: "https://dicoding.com")
+                    AboutLink(name: "Github", link: self.viewModel.github)
+                    AboutLink(name: "Website", link: self.viewModel.website)
+                    AboutLink(name: "Dicoding Profile", link: self.viewModel.dicodingProfile)
                 }
                 .padding([.leading, .trailing], .spacingLarge)
 
                 Spacer()
             }
             .navigationBarTitle("Profile", displayMode: .inline)
+            .onAppear {
+                self.viewModel.loadData()
+            }
         }
     }
 }
@@ -54,6 +60,14 @@ struct AboutLink: View {
 }
 
 struct AboutProfile: View {
+    var name: String
+    var role: String
+
+    init(name: String, role: String){
+        self.name = name
+        self.role = role
+    }
+
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
@@ -68,12 +82,18 @@ struct AboutProfile: View {
                         .clipShape(Circle())
                         .frame(width: 80, height: 80)
                     VStack(alignment: .leading) {
-                        Text("Dwi Randy H")
+                        Text(self.name)
                             .font(.system(size: 18))
                             .fontWeight(.bold)
-                        Text("iOS Engineer")
+                        Text(self.role)
                             .font(.system(size: 14))
                             .foregroundColor(.primaryText)
+
+                        NavigationLink(destination: EditProfilePage()) {
+                            Text("Edit Data")
+                                .font(.system(size: 14))
+                                .padding([.top], .spacingNormal)
+                        }
                     }
                 }
                 .padding([.leading, .trailing], 20)
@@ -88,7 +108,7 @@ struct AboutPage_Previews: PreviewProvider {
         Group {
             AboutPage()
             AboutLink(name: "Github", link: "https://github.com/dwirandyh").previewLayout(.sizeThatFits)
-            AboutProfile().previewLayout(.sizeThatFits)
+            AboutProfile(name: "Dwi Randy", role: "iOS Engineer").previewLayout(.sizeThatFits)
         }
     }
 }

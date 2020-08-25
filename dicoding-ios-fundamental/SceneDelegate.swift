@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
+        self.setDefaultProfile()
         let contentView = ContentView()
 
         // Use a UIHostingController as window root view controller.
@@ -59,6 +60,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func setDefaultProfile(){
+        let isFirstLoad: Bool? = UserDefaultHelper.load(forKey: .isFirstLoad) as Bool?
+        if isFirstLoad ?? true {
+            UserDefaultHelper.save(value: "Dwi Randy H", forKey: .name)
+            UserDefaultHelper.save(value: "iOS Engineer", forKey: .role)
+            UserDefaultHelper.save(value: "https://github.com/dwirandyh", forKey: .github)
+            UserDefaultHelper.save(value: "https://dwirandyh.com", forKey: .website)
+            UserDefaultHelper.save(value: "https://www.dicoding.com/users/51219", forKey: .dicodingProfile)
+
+            UserDefaultHelper.save(value: false, forKey: .isFirstLoad)
+        }
+    }
 
 }
 
