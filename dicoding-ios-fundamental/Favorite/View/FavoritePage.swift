@@ -9,12 +9,25 @@
 import SwiftUI
 
 struct FavoritePage: View {
+
+    @ObservedObject var viewModel: FavoriteViewModel = FavoriteViewModel()
+
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Favorite Page")
+            List(self.viewModel.games) { game in
+                ZStack {
+                    GameItem(game: game)
+
+                    NavigationLink(destination: DetailPage(id: game.id ?? 0)) {
+                        EmptyView()
+                    }.frame(width: 0, height: 0, alignment: .center)
+                        .hidden()
+                }
             }
             .navigationBarTitle("Favorite", displayMode: .inline)
+        }
+        .onAppear {
+            self.viewModel.getFavoriteGame()
         }
     }
 }

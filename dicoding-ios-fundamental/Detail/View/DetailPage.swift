@@ -21,7 +21,7 @@ struct DetailPage: View {
     var body: some View {
         VStack {
             if self.viewModel.game != nil {
-                DetailGame(game: self.viewModel.game!)
+                DetailGame(viewModel: self.viewModel, game: self.viewModel.game!)
             } else {
                 VStack {
                     ActivityIndicator(isLoading: self.$viewModel.isLoading, style: .large)
@@ -38,6 +38,7 @@ struct DetailPage: View {
 
 struct DetailGame: View {
 
+    @ObservedObject var viewModel: DetailViewModel
     var game: Game
 
     private func openTrailer(){
@@ -47,7 +48,11 @@ struct DetailGame: View {
     }
 
     private func addToFavorite(){
+        self.viewModel.addToFavoriteList(game: self.game)
+    }
 
+    private func removeFavorite(){
+        self.viewModel.removeFavorite(gameId: self.game.id ?? 0)
     }
 
     var body: some View {
@@ -89,13 +94,23 @@ struct DetailGame: View {
                                 .fontWeight(.medium)
                         }.modifier(ButtonModifier(style: .filled))
 
-                        Button(action: {
-                            self.addToFavorite()
-                        }){
-                            Text("Add to favorite")
-                                .font(.system(size: 14))
-                                .fontWeight(.medium)
-                        }.modifier(ButtonModifier(style: .unfilled))
+                        if self.viewModel.isFavorite {
+                            Button(action: {
+                                self.removeFavorite()
+                            }){
+                                Text("Remove favorite")
+                                    .font(.system(size: 14))
+                                    .fontWeight(.medium)
+                            }.modifier(ButtonModifier(style: .filled))
+                        } else {
+                            Button(action: {
+                                self.addToFavorite()
+                            }){
+                                Text("Add to favorite")
+                                    .font(.system(size: 14))
+                                    .fontWeight(.medium)
+                            }.modifier(ButtonModifier(style: .unfilled))
+                        }
                     }
                 }
                 .padding([.leading, .trailing], .spacingLarge)

@@ -10,15 +10,18 @@ import Foundation
 
 class DetailViewModel: ObservableObject {
     private let service: GameService
+    private let gameProvider: GameProvider
 
+    @Published var isFavorite: Bool = false
     @Published var isLoading: Bool = true
     @Published var game: Game?
 
-    init(service: GameService = GameServiceImpl()) {
+    init(service: GameService = GameServiceImpl(), provider: GameProvider = GameProviderImpl()) {
         self.service = service
+        self.gameProvider = provider
     }
 
-    func getDetailGame(id: Int){
+    func getDetailGame(id: Int) {
         self.isLoading = true
         
         self.service.getDetail(id: id) { [weak self] (result) in
@@ -34,6 +37,32 @@ class DetailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.game = gameResult
                 self.isLoading = false
+            }
+
+            self.findGame(id: gameResult?.id ?? 0)
+        }
+    }
+
+    func findGame(id: Int){
+        self.gameProvider.findData(gameId: id) { (isExist) in
+            DispatchQueue.main.async {
+                self.isFavorite = isExist
+            }
+        }
+    }
+
+    func addToFavoriteList(game: Game) {
+        self.gameProvider.addFavorite(game: game) {
+            DispatchQueue.main.async {
+                self.isFavorite = true
+            }
+        }
+    }
+
+    func removeFavorite(gameId: Int) {
+        self.gameProvider.removeFavorite(gameId: gameId) {
+            DispatchQueue.main.async {
+                self.isFavorite = false
             }
         }
     }
