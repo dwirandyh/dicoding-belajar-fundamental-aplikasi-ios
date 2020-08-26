@@ -6,8 +6,6 @@
 //  Copyright © 2020 dwirandyh. All rights reserved.
 //
 
-import Foundation
-
 struct Genre: Codable {
     var id: Int?
     var name: String?

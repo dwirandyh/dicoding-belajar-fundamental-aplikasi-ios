@@ -11,7 +11,8 @@ import SwiftUI
 struct ImageView: View {
 
     @ObservedObject var imageLoader: ImageLoader
-    @State var image: UIImage = UIImage()
+    @State var image: UIImage?
+    @State var isLoading: Bool = true
 
 
     init(url: String){
@@ -20,11 +21,20 @@ struct ImageView: View {
 
     var body: some View {
         GeometryReader{ geo in
-            Image(uiImage: self.image)
-                .resizable()
-                .frame(width: geo.size.width)
-                .onReceive(self.imageLoader.didChange) { (data) in
-                    self.image = UIImage(data: data) ?? UIImage()
+            VStack {
+                if self.isLoading {
+                    ActivityIndicator(isLoading: self.$isLoading, style: .medium)
+                    Text("Loading image...")
+                        .foregroundColor(.primaryText)
+                } else {
+                    Image(uiImage: self.image!)
+                        .resizable()
+                        .frame(width: geo.size.width)
+                }
+            }
+            .onReceive(self.imageLoader.didChange) { (data) in
+                self.isLoading = false
+                self.image = UIImage(data: data) ?? UIImage()
             }
         }
     }

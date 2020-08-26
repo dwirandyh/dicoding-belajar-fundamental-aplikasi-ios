@@ -66,7 +66,7 @@ struct HomeSearchView: View {
             Image
                 .search
                 .foregroundColor(.gray80)
-            TextField("Search Games", text: $query)
+            TextField("Search Gamesss", text: $query)
                 .foregroundColor(.gray80)
         }
         .padding(.spacingNormal)

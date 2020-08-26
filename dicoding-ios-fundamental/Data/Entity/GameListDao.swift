@@ -6,8 +6,6 @@
 //  Copyright © 2020 dwirandyh. All rights reserved.
 //
 
-import Foundation
-
 struct GameListDao: Codable {
     var count: Int
     var next: String?

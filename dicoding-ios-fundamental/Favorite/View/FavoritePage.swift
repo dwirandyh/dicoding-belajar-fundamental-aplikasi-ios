@@ -14,20 +14,26 @@ struct FavoritePage: View {
 
     var body: some View {
         NavigationView {
-            List(self.viewModel.games) { game in
-                ZStack {
-                    GameItem(game: game)
+            VStack {
+                if self.viewModel.games.count > 0 {
+                    List(self.viewModel.games) { game in
+                        ZStack {
+                            GameItem(game: game)
 
-                    NavigationLink(destination: DetailPage(id: game.id ?? 0)) {
-                        EmptyView()
-                    }.frame(width: 0, height: 0, alignment: .center)
-                        .hidden()
+                            NavigationLink(destination: DetailPage(id: game.id ?? 0)) {
+                                EmptyView()
+                            }.frame(width: 0, height: 0, alignment: .center)
+                                .hidden()
+                        }
+                    }
+                } else {
+                    Text("Tidak ada data di dalam daftar favorite")
                 }
             }
+            .onAppear {
+                self.viewModel.getFavoriteGame()
+            }
             .navigationBarTitle("Favorite", displayMode: .inline)
-        }
-        .onAppear {
-            self.viewModel.getFavoriteGame()
         }
     }
 }

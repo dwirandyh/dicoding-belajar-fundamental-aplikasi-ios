@@ -6,8 +6,6 @@
 //  Copyright © 2020 dwirandyh. All rights reserved.
 //
 
-import Foundation
-
 struct Clip: Codable {
     var clip: String?
     var video: String?

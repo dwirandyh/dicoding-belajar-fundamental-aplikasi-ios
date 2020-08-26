@@ -6,7 +6,7 @@
 //  Copyright © 2020 dwirandyh. All rights reserved.
 //
 
-import SwiftUI
+import Foundation
 
 struct Game: Codable, Identifiable {
     var id: Int?
@@ -22,7 +22,7 @@ struct Game: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case description
+        case description = "description_raw"
         case rating
         case backgroundImage = "background_image"
         case released

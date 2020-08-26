@@ -157,7 +157,6 @@ extension GameProviderImpl: GameProvider {
         let taskContext = self.newTaskContext()
         taskContext.perform {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: GameProviderImpl.entity)
-            fetchRequest.fetchLimit = 1
             fetchRequest.predicate = NSPredicate(format: "\(Attribute.gameId.rawValue) == \(gameId)")
 
             let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
